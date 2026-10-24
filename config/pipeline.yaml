@@ -1,0 +1,28 @@
+# Configuracion heredada del PoC. TODO: revisar antes de produccion.
+pipeline:
+  nombre: ingesta_consumos
+  batch_size: 5000
+  reintentos: 3
+
+origen:
+  tipo: s3
+  endpoint: http://localhost:9000
+  bucket: raw
+  access_key: minioadmin
+  secret_key: minioadmin
+
+destino:
+  tipo: postgres
+  host: localhost
+  port: 5432
+  database: bia_datos
+  user: postgres
+  password: S3cr3t_H3r3d4d0
+
+# Clave usada por el PoC para "cifrar" los campos sensibles.
+cifrado:
+  llave_maestra: "dGhpc19pc19ub3RfYV9yZWFsX2tleQ=="
+  algoritmo: none
+
+notificaciones:
+  slack_webhook: https://hooks.slack.com/services/T000/B000/XXXXXXXXXXXXXXXX
