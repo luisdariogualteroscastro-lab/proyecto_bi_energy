@@ -1,0 +1,131 @@
+# Clasificación de datos - Gobernanza (Ley 1581 / ISO 27001)
+# Niveles: Público, Interno, Confidencial, Restringido-PII
+
+tablas:
+  core.dim_cliente:
+    descripcion: "Maestro de clientes corporativos"
+    columnas:
+      cliente_id:
+        clasificacion: "Interno"
+        descripcion: "Identificador único del cliente"
+      razon_social:
+        clasificacion: "Confidencial"
+        descripcion: "Razón social de la empresa cliente"
+      nit:
+        clasificacion: "Restringido-PII"
+        descripcion: "Número de Identificación Tributaria (cifrado en reposo)"
+      email_contacto:
+        clasificacion: "Restringido-PII"
+        descripcion: "Correo electrónico de contacto (cifrado en reposo / enmascarado)"
+      celular_contacto:
+        clasificacion: "Restringido-PII"
+        descripcion: "Número de celular (cifrado en reposo / enmascarado)"
+      direccion:
+        clasificacion: "Confidencial"
+        descripcion: "Dirección física de la sede"
+      ciudad:
+        clasificacion: "Interno"
+        descripcion: "Ciudad de ubicación"
+      departamento:
+        clasificacion: "Interno"
+        descripcion: "Departamento de ubicación"
+      representante_legal:
+        clasificacion: "Restringido-PII"
+        descripcion: "Nombre del representante legal (cifrado en reposo)"
+      observaciones:
+        clasificacion: "Restringido-PII"
+        descripcion: "Notas con posibles PII incrustadas (limpias/enmascaradas y cifradas)"
+
+  core.dim_frontera:
+    descripcion: "Maestro de fronteras comerciales"
+    columnas:
+      frontera_id:
+        clasificacion: "Público"
+        descripcion: "Código de la frontera comercial (CO##########)"
+      codigo_sic:
+        clasificacion: "Interno"
+        descripcion: "Código SIC de la frontera (frtXXXXX)"
+      cliente_id:
+        clasificacion: "Interno"
+        descripcion: "FK al cliente propietario"
+      mercado:
+        clasificacion: "Interno"
+        descripcion: "Mercado (Regulado / No Regulado)"
+      operador_red:
+        clasificacion: "Interno"
+        descripcion: "Operador de red (OR)"
+      nivel_tension:
+        clasificacion: "Interno"
+        descripcion: "Nivel de tensión"
+      fecha_registro:
+        clasificacion: "Interno"
+        descripcion: "Fecha de alta de la frontera"
+      estado:
+        clasificacion: "Interno"
+        descripcion: "Estado operativo (ACTIVA, etc.)"
+
+  core.fact_consumo_horario:
+    descripcion: "Tabla de hechos de consumo horario por frontera"
+    columnas:
+      frontera_id:
+        clasificacion: "Público"
+        descripcion: "Código de la frontera comercial"
+      timestamp:
+        clasificacion: "Público"
+        descripcion: "Marca de tiempo local (America/Bogota)"
+      consumo_kwh:
+        clasificacion: "Confidencial"
+        descripcion: "Consumo horario validado en kWh"
+      version_lectura:
+        clasificacion: "Interno"
+        descripcion: "Versión de la lectura (1 original, 2 corregida)"
+      calidad_lectura:
+        clasificacion: "Interno"
+        descripcion: "Indicador de calidad (OK, CORREGIDA)"
+      hash_integridad:
+        clasificacion: "Interno"
+        descripcion: "Firma HMAC/hash de integridad del registro"
+
+  cuarentena.registros_rechazados:
+    descripcion: "Zona de cuarentena para registros inválidos o huérfanos"
+    columnas:
+      id:
+        clasificacion: "Interno"
+        descripcion: "Identificador de rechazo"
+      origen_archivo:
+        clasificacion: "Interno"
+        descripcion: "Nombre del archivo fuente"
+      payload_crudo:
+        clasificacion: "Confidencial"
+        descripcion: "Datos originales sin procesar"
+      motivo_rechazo:
+        clasificacion: "Interno"
+        descripcion: "Razón detallada del rechazo"
+      timestamp_rechazo:
+        clasificacion: "Interno"
+        descripcion: "Momento del rechazo"
+
+  audit.log_ejecuciones:
+    descripcion: "Bitácora append-only de corridas del pipeline"
+    columnas:
+      id:
+        clasificacion: "Interno"
+        descripcion: "ID de corrida"
+      usuario:
+        clasificacion: "Interno"
+        descripcion: "Usuario que ejecutó"
+      etapa:
+        clasificacion: "Interno"
+        descripcion: "Etapa del pipeline"
+      filas_leidas:
+        clasificacion: "Interno"
+        descripcion: "Número de filas leídas"
+      filas_cargadas:
+        clasificacion: "Interno"
+        descripcion: "Número de filas cargadas exitosamente"
+      resultado:
+        clasificacion: "Interno"
+        descripcion: "Estado o métricas resumidas"
+      timestamp:
+        clasificacion: "Interno"
+        descripcion: "Momento de la ejecución"

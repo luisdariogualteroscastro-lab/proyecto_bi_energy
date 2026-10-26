@@ -1,0 +1,6 @@
+# agent.yaml
+agent:
+  name: agente_bi_energy
+  description: Agente para pruebas técnicas de BI Energy
+  model: gemini-3.5-flash
+  max_output_tokens: 2048

@@ -1,8 +1,11 @@
-# Dependencias heredadas del PoC. Varias estan desactualizadas.
-# Revisar y actualizar hace parte del alcance de la prueba.
-requests==2.19.1
-PyYAML==5.3.1
-urllib3==1.24.1
-Jinja2==2.11.2
-psycopg2-binary==2.9.9
-pandas==2.2.3
+# Dependencias actualizadas y endurecidas contra vulnerabilidades conocidas
+requests>=2.32.3
+PyYAML>=6.0.1
+urllib3>=2.2.2
+Jinja2>=3.1.4
+psycopg2-binary>=2.9.9
+pandas>=2.2.3
+cryptography>=43.0.0
+kafka-python-ng>=2.2.2
+python-dotenv>=1.0.1
+pytest>=8.0.0
